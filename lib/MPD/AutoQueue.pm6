@@ -18,10 +18,10 @@ sub pick-file
 	loop {
 		$pick = @database.pick;
 
-		last if $pick<file>:exists;
+		last if $pick<type> eq "file";
 	}
 
-	$pick<file>.Str;
+	$pick<path>.Str;
 }
 
 sub queue-random
