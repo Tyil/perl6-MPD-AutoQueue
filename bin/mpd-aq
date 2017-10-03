@@ -41,7 +41,7 @@ sub MAIN
 			when "database" {
 				@database = update-database(:$client, :say($config.get("mpd-autoqueue.say")));
 			}
-			when "playlist" {
+			when "playlist" | "player" {
 				queue-random(:$client, :@database, :say($config.get("mpd-autoqueue.say")));
 			}
 		}

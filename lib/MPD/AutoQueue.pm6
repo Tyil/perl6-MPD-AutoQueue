@@ -6,6 +6,7 @@ unit module MPD::AutoQueue;
 
 use MPD::Client::Current;
 use MPD::Client::Database;
+use MPD::Client::Control;
 
 sub pick-file
 (
@@ -39,6 +40,7 @@ sub queue-random
 	my $pick = pick-file(:@database);
 
 	mpd-add($pick, $client);
+	mpd-play($client);
 
 	if ($say) {
 		say "Queued $pick";
