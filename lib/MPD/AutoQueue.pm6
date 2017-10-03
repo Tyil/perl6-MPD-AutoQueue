@@ -1,0 +1,62 @@
+#! /usr/bin/env false
+
+use v6.c;
+
+unit module MPD::AutoQueue;
+
+use MPD::Client::Current;
+use MPD::Client::Database;
+
+sub pick-file
+(
+	:@database
+	--> Str
+) is export {
+	my $pick;
+
+	loop {
+		$pick = @database.pick;
+
+		last if $pick<file>:exists;
+	}
+
+	$pick<file>.Str;
+}
+
+sub queue-random
+(
+	:$client,
+	:@database,
+	Bool :$say = False
+	--> Str
+) is export {
+	my @playlist = mpd-playlistinfo($client);
+
+	if (0 < @playlist.elems) {
+		return "";
+	}
+
+	my $pick = pick-file(:@database);
+
+	mpd-add($pick, $client);
+
+	if ($say) {
+		say "Queued $pick";
+	}
+
+	$pick;
+}
+
+sub update-database
+(
+	:$client,
+	Bool :$say = False
+) is export {
+	my @results = mpd-listall($client);
+
+	if ($say) {
+		say "Database contains {@results.elems} entries";
+	}
+
+	@results;
+}
