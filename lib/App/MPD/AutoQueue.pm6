@@ -18,10 +18,10 @@ sub pick-file
 	loop {
 		$pick = @database.pick;
 
-		last if $pick<file>:exists;
+		last if $pick<type> eq "file";
 	}
 
-	$pick<file>.Str;
+	$pick<path>.Str;
 }
 
 sub queue-random
@@ -37,9 +37,14 @@ sub queue-random
 		return "";
 	}
 
-	my $pick = pick-file(:@database);
+	my $pick;
 
-	mpd-add($pick, $client);
+	loop {
+		$pick = pick-file(:@database);
+
+		last if mpd-add($pick, $client);
+	}
+
 	mpd-play($client);
 
 	if ($say) {
