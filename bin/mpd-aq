@@ -2,10 +2,10 @@
 
 use v6.c;
 
+use App::MPD::AutoQueue;
 use Config;
-use MPD::Client;
 use MPD::Client::Status;
-use MPD::AutoQueue;
+use MPD::Client;
 
 sub MAIN
 {
