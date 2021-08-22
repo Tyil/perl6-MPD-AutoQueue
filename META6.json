@@ -16,7 +16,7 @@
     "App::MPD::AutoQueue" : "lib/App/MPD/AutoQueue.pm6"
   },
   "resources" : [ ],
-  "source-url" : "https://github.com/tyil/perl6-App-MPD-AutoQueue.git",
+  "source-url" : "https://github.com/tyil/perl6-MPD-AutoQueue",
   "tags" : [ ],
   "test-depends" : [
     "Test::META"
